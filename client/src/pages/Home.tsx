@@ -46,8 +46,8 @@ export default function Home() {
 
       {/* Header */}
       <header className="border-b bg-white/90 backdrop-blur-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center gap-3">
+        <div className="container max-w-7xl mx-auto px-8">
+          <div className="flex items-center gap-3 py-4">
             <motion.div 
               className="p-2 rounded-xl bg-primary text-white"
               whileHover={{ scale: 1.05, rotate: 5 }}
@@ -60,7 +60,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-6 py-12">
+      <main className="container max-w-7xl mx-auto px-8 py-12">
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -100,6 +100,7 @@ export default function Home() {
 
         <div ref={ref} className="h-10" />
       </main>
+
       <CompanyModal
         company={selectedCompany}
         onClose={() => setSelectedCompany(null)}

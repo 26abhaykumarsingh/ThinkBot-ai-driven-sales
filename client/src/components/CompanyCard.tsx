@@ -16,8 +16,17 @@ const statusColors = {
   [CompanyStatus.LOW_POTENTIAL]: "bg-red-100 text-red-800 border-red-200",
 };
 
+const sectorGradients = {
+  "Technology": "from-blue-500 to-purple-500",
+  "Healthcare": "from-green-500 to-teal-500",
+  "Finance": "from-blue-500 to-indigo-500",
+  "Energy": "from-orange-500 to-red-500",
+  "Consumer": "from-pink-500 to-rose-500",
+};
+
 export default function CompanyCard({ company, onClick }: CompanyCardProps) {
   const SectorIcon = getSectorIcon(company.sector);
+  const gradientClass = sectorGradients[company.sector as keyof typeof sectorGradients] || "from-blue-500 to-purple-500";
 
   return (
     <motion.div
@@ -28,46 +37,55 @@ export default function CompanyCard({ company, onClick }: CompanyCardProps) {
         transition: { duration: 0.2 }
       }}
       whileTap={{ scale: 0.98 }}
+      className="group relative"
     >
+      {/* Enhanced gradient border with glow effect */}
+      <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-blue-500 rounded-xl opacity-0 group-hover:opacity-100 transition duration-300 blur group-hover:blur-md" />
+
       <Card
         onClick={onClick}
-        className="p-6 cursor-pointer hover:shadow-xl transition-all duration-300 bg-white border-primary/10"
+        className="relative p-0 cursor-pointer transition-all duration-300 bg-white hover:shadow-xl overflow-hidden"
       >
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <motion.div 
-              className="p-3 bg-primary/10 rounded-xl"
-              whileHover={{ rotate: 10 }}
-            >
-              <SectorIcon className="w-6 h-6 text-primary" />
-            </motion.div>
-            <div>
-              <div className="flex items-center gap-2 mb-1">
-                <h3 className="font-semibold text-lg">{company.symbol}</h3>
-                <Badge variant="outline" className="ml-2">{company.country}</Badge>
-              </div>
-              <p className="text-gray-600 text-sm">{company.name}</p>
-            </div>
-          </div>
-          <Badge className={`${statusColors[company.status as CompanyStatus]} border`}>
-            {company.status}
-          </Badge>
-        </div>
+        {/* Colored header section */}
+        <div className={`w-full h-2 bg-gradient-to-r ${gradientClass}`} />
 
-        <div className="mt-6 grid grid-cols-3 gap-6">
-          <div>
-            <p className="text-sm text-gray-500 mb-1">Market Cap</p>
-            <p className="font-medium text-gray-900">
-              ${(Number(company.marketCap) / 1e9).toFixed(2)}B
-            </p>
+        <div className="p-6">
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <motion.div 
+                className={`p-3 rounded-xl bg-gradient-to-br ${gradientClass} shadow-lg`}
+                whileHover={{ rotate: 10 }}
+              >
+                <SectorIcon className="w-6 h-6 text-white" />
+              </motion.div>
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <h3 className="font-semibold text-lg">{company.symbol}</h3>
+                  <Badge variant="outline" className="ml-2">{company.country}</Badge>
+                </div>
+                <p className="text-gray-600 text-sm">{company.name}</p>
+              </div>
+            </div>
+            <Badge className={`${statusColors[company.status as CompanyStatus]} border`}>
+              {company.status}
+            </Badge>
           </div>
-          <div>
-            <p className="text-sm text-gray-500 mb-1">Sector</p>
-            <p className="font-medium text-gray-900">{company.sector}</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500 mb-1">Industry</p>
-            <p className="font-medium text-gray-900">{company.industry}</p>
+
+          <div className="mt-6 grid grid-cols-3 gap-6">
+            <div>
+              <p className="text-sm text-gray-500 mb-1">Market Cap</p>
+              <p className="font-medium text-gray-900">
+                ${(Number(company.marketCap) / 1e9).toFixed(2)}B
+              </p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-500 mb-1">Sector</p>
+              <p className="font-medium text-gray-900">{company.sector}</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-500 mb-1">Industry</p>
+              <p className="font-medium text-gray-900">{company.industry}</p>
+            </div>
           </div>
         </div>
       </Card>
