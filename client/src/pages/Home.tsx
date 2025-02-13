@@ -39,12 +39,10 @@ export default function Home() {
   const companies = data?.pages.flat() ?? [];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-primary/5 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-
+    <div className="min-h-screen bg-gradient-to-br from-white via-slate-50 to-primary/5">
       {/* Header */}
-      <header className="border-b bg-white/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-6 py-4">
+      <header className="border-b bg-white/90 backdrop-blur-sm sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-6 py-4">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-xl bg-primary text-white">
               <ChartBarIcon className="w-6 h-6" />
@@ -54,7 +52,7 @@ export default function Home() {
         </div>
       </header>
 
-      <div className="container mx-auto px-6 py-12">
+      <main className="max-w-6xl mx-auto px-6 py-12">
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -93,8 +91,7 @@ export default function Home() {
         </div>
 
         <div ref={ref} className="h-10" />
-      </div>
-
+      </main>
       <CompanyModal
         company={selectedCompany}
         onClose={() => setSelectedCompany(null)}

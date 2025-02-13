@@ -23,18 +23,24 @@ export default function CompanyCard({ company, onClick }: CompanyCardProps) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      whileHover={{ scale: 1.02 }}
-      transition={{ duration: 0.2 }}
+      whileHover={{ 
+        scale: 1.02,
+        transition: { duration: 0.2 }
+      }}
+      whileTap={{ scale: 0.98 }}
     >
       <Card
         onClick={onClick}
-        className="p-6 cursor-pointer hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-white to-primary/5 border-primary/10"
+        className="p-6 cursor-pointer hover:shadow-xl transition-all duration-300 bg-white border-primary/10"
       >
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="p-3 bg-primary/10 rounded-xl">
+            <motion.div 
+              className="p-3 bg-primary/10 rounded-xl"
+              whileHover={{ rotate: 10 }}
+            >
               <SectorIcon className="w-6 h-6 text-primary" />
-            </div>
+            </motion.div>
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <h3 className="font-semibold text-lg">{company.symbol}</h3>
