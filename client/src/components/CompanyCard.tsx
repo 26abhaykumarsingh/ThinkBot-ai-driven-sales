@@ -17,11 +17,11 @@ const statusColors = {
 };
 
 const sectorGradients = {
-  "Technology": "bg-gradient-to-br from-blue-500/10 via-indigo-500/10 to-purple-500/10",
-  "Healthcare": "bg-gradient-to-br from-emerald-500/10 via-teal-500/10 to-cyan-500/10",
-  "Finance": "bg-gradient-to-br from-blue-500/10 via-sky-500/10 to-indigo-500/10",
-  "Energy": "bg-gradient-to-br from-amber-500/10 via-orange-500/10 to-yellow-500/10",
-  "Consumer": "bg-gradient-to-br from-pink-500/10 via-rose-500/10 to-red-500/10",
+  "Technology": "from-blue-500/90 via-indigo-500/90 to-purple-500/90",
+  "Healthcare": "from-emerald-500/90 via-teal-500/90 to-cyan-500/90",
+  "Finance": "from-blue-500/90 via-sky-500/90 to-indigo-500/90",
+  "Energy": "from-amber-500/90 via-orange-500/90 to-yellow-500/90",
+  "Consumer": "from-pink-500/90 via-rose-500/90 to-red-500/90",
 };
 
 export default function CompanyCard({ company, onClick }: CompanyCardProps) {
@@ -41,25 +41,28 @@ export default function CompanyCard({ company, onClick }: CompanyCardProps) {
     >
       <Card
         onClick={onClick}
-        className={`relative p-6 cursor-pointer transition-all duration-300 bg-white hover:shadow-lg border border-gray-100 overflow-hidden ${gradientClass} hover:bg-opacity-100`}
+        className="relative p-0 cursor-pointer transition-all duration-300 bg-white hover:shadow-lg border border-gray-100 overflow-hidden"
       >
-        {/* Content wrapper */}
-        <div className="relative z-10">
+        {/* Gradient header */}
+        <div className={`w-full h-16 bg-gradient-to-r ${gradientClass} flex items-center px-6`}>
+          <motion.div 
+            className="p-2 rounded-lg bg-white/20 backdrop-blur-sm"
+            whileHover={{ rotate: 10 }}
+          >
+            <SectorIcon className="w-6 h-6 text-white" />
+          </motion.div>
+          <span className="ml-3 text-white font-medium">{company.sector}</span>
+        </div>
+
+        {/* Content area */}
+        <div className="p-6">
           <div className="flex items-start justify-between gap-4">
-            <div className="flex items-center gap-4">
-              <motion.div 
-                className="p-3 rounded-xl bg-white shadow-sm group-hover:shadow group-hover:bg-primary/5 transition-all duration-300"
-                whileHover={{ rotate: 10 }}
-              >
-                <SectorIcon className="w-6 h-6 text-primary group-hover:text-primary/80" />
-              </motion.div>
-              <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <h3 className="font-semibold text-lg">{company.symbol}</h3>
-                  <Badge variant="outline" className="ml-2">{company.country}</Badge>
-                </div>
-                <p className="text-gray-600 text-sm">{company.name}</p>
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <h3 className="font-semibold text-lg">{company.symbol}</h3>
+                <Badge variant="outline" className="ml-2">{company.country}</Badge>
               </div>
+              <p className="text-gray-600 text-sm">{company.name}</p>
             </div>
             <Badge className={`${statusColors[company.status as CompanyStatus]} border`}>
               {company.status}
@@ -74,8 +77,8 @@ export default function CompanyCard({ company, onClick }: CompanyCardProps) {
               </p>
             </div>
             <div>
-              <p className="text-sm text-gray-500 mb-1">Sector</p>
-              <p className="font-medium text-gray-900">{company.sector}</p>
+              <p className="text-sm text-gray-500 mb-1">IPO Year</p>
+              <p className="font-medium text-gray-900">{company.ipoYear}</p>
             </div>
             <div>
               <p className="text-sm text-gray-500 mb-1">Industry</p>

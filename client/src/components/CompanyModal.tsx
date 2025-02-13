@@ -8,14 +8,23 @@ interface CompanyModalProps {
   onClose: () => void;
 }
 
+const sectorGradients = {
+  "Technology": "from-blue-500/90 via-indigo-500/90 to-purple-500/90",
+  "Healthcare": "from-emerald-500/90 via-teal-500/90 to-cyan-500/90",
+  "Finance": "from-blue-500/90 via-sky-500/90 to-indigo-500/90",
+  "Energy": "from-amber-500/90 via-orange-500/90 to-yellow-500/90",
+  "Consumer": "from-pink-500/90 via-rose-500/90 to-red-500/90",
+};
+
 export default function CompanyModal({ company, onClose }: CompanyModalProps) {
   if (!company) return null;
 
   const SectorIcon = getSectorIcon(company.sector);
+  const gradientClass = sectorGradients[company.sector as keyof typeof sectorGradients] || sectorGradients["Technology"];
 
   return (
     <Dialog open={!!company} onOpenChange={() => onClose()}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto p-0">
         <AnimatePresence>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -23,77 +32,81 @@ export default function CompanyModal({ company, onClose }: CompanyModalProps) {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="flex items-center gap-4 mb-8">
+            {/* Header with gradient */}
+            <div className={`w-full h-32 bg-gradient-to-r ${gradientClass} p-8 flex items-center gap-6`}>
               <motion.div 
-                className="p-4 bg-primary/10 rounded-2xl"
+                className="p-4 rounded-2xl bg-white/20 backdrop-blur-sm"
                 whileHover={{ rotate: 10 }}
                 transition={{ type: "spring", stiffness: 200 }}
               >
-                <SectorIcon className="w-10 h-10 text-primary" />
+                <SectorIcon className="w-12 h-12 text-white" />
               </motion.div>
-              <div>
-                <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">
+              <div className="text-white">
+                <h2 className="text-3xl font-bold">
                   {company.name}
                 </h2>
-                <p className="text-xl text-gray-600">{company.symbol}</p>
+                <p className="text-xl opacity-90">{company.symbol}</p>
               </div>
             </div>
 
-            <motion.div 
-              className="grid grid-cols-2 gap-8 mb-8"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-            >
-              <div className="space-y-6">
-                <div className="bg-primary/5 p-4 rounded-xl">
-                  <p className="text-sm text-gray-500 mb-1">Last Sale</p>
-                  <p className="text-2xl font-medium">${company.lastSale}</p>
+            {/* Content */}
+            <div className="p-8 space-y-8">
+              <motion.div 
+                className="grid grid-cols-2 gap-8"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+              >
+                <div className="space-y-6">
+                  <div className="bg-gray-50 p-4 rounded-xl">
+                    <p className="text-sm text-gray-500 mb-1">Last Sale</p>
+                    <p className="text-2xl font-medium">${company.lastSale}</p>
+                  </div>
+                  <div className="bg-gray-50 p-4 rounded-xl">
+                    <p className="text-sm text-gray-500 mb-1">Net Change</p>
+                    <p className={`text-2xl font-medium ${Number(company.netChange) > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                      {Number(company.netChange) > 0 ? '+' : ''}{company.netChange}
+                    </p>
+                  </div>
+                  <div className="bg-gray-50 p-4 rounded-xl">
+                    <p className="text-sm text-gray-500 mb-1">Market Cap</p>
+                    <p className="text-2xl font-medium">${(Number(company.marketCap) / 1e9).toFixed(2)}B</p>
+                  </div>
                 </div>
-                <div className="bg-primary/5 p-4 rounded-xl">
-                  <p className="text-sm text-gray-500 mb-1">Net Change</p>
-                  <p className={`text-2xl font-medium ${Number(company.netChange) > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                    {Number(company.netChange) > 0 ? '+' : ''}{company.netChange}
-                  </p>
-                </div>
-                <div className="bg-primary/5 p-4 rounded-xl">
-                  <p className="text-sm text-gray-500 mb-1">Market Cap</p>
-                  <p className="text-2xl font-medium">${(Number(company.marketCap) / 1e9).toFixed(2)}B</p>
-                </div>
-              </div>
 
-              <div className="space-y-6">
-                <div className="bg-primary/5 p-4 rounded-xl">
-                  <p className="text-sm text-gray-500 mb-1">Volume</p>
-                  <p className="text-2xl font-medium">{company.volume?.toLocaleString()}</p>
+                <div className="space-y-6">
+                  <div className="bg-gray-50 p-4 rounded-xl">
+                    <p className="text-sm text-gray-500 mb-1">Volume</p>
+                    <p className="text-2xl font-medium">{company.volume?.toLocaleString()}</p>
+                  </div>
+                  <div className="bg-gray-50 p-4 rounded-xl">
+                    <p className="text-sm text-gray-500 mb-1">IPO Year</p>
+                    <p className="text-2xl font-medium">{company.ipoYear}</p>
+                  </div>
+                  <div className="bg-gray-50 p-4 rounded-xl">
+                    <p className="text-sm text-gray-500 mb-1">Country</p>
+                    <p className="text-2xl font-medium">{company.country}</p>
+                  </div>
                 </div>
-                <div className="bg-primary/5 p-4 rounded-xl">
-                  <p className="text-sm text-gray-500 mb-1">IPO Year</p>
-                  <p className="text-2xl font-medium">{company.ipoYear}</p>
-                </div>
-                <div className="bg-primary/5 p-4 rounded-xl">
-                  <p className="text-sm text-gray-500 mb-1">Country</p>
-                  <p className="text-2xl font-medium">{company.country}</p>
-                </div>
-              </div>
-            </motion.div>
+              </motion.div>
 
-            <motion.div 
-              className="space-y-6"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-            >
-              <div className="bg-white/50 backdrop-blur-sm p-6 rounded-xl border border-primary/10">
-                <h3 className="text-xl font-semibold mb-3">About</h3>
-                <p className="text-gray-600 leading-relaxed">{company.about}</p>
-              </div>
+              <motion.div 
+                className="space-y-6"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+              >
+                <div className="bg-gray-50 p-6 rounded-xl">
+                  <h3 className="text-xl font-semibold mb-3">About</h3>
+                  <p className="text-gray-600 leading-relaxed">{company.about}</p>
+                </div>
 
-              <div className="bg-white/50 backdrop-blur-sm p-6 rounded-xl border border-primary/10">
-                <h3 className="text-xl font-semibold mb-3">AI Insight</h3>
-                <p className="text-gray-600 leading-relaxed">{company.aiInsight}</p>
-              </div>
-            </motion.div>
+                <div className="bg-gray-50 p-6 rounded-xl">
+                  <h3 className="text-xl font-semibold mb-3">AI Insight</h3>
+                  <p className="text-gray-600 leading-relaxed">{company.aiInsight}</p>
+                </div>
+              </motion.div>
+            </div>
           </motion.div>
         </AnimatePresence>
       </DialogContent>
