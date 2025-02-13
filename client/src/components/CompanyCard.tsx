@@ -17,16 +17,16 @@ const statusColors = {
 };
 
 const sectorGradients = {
-  "Technology": "from-blue-400/40 via-indigo-400/40 to-purple-400/40",
-  "Healthcare": "from-emerald-400/40 via-teal-400/40 to-cyan-400/40",
-  "Finance": "from-blue-400/40 via-sky-400/40 to-indigo-400/40",
-  "Energy": "from-amber-400/40 via-orange-400/40 to-yellow-400/40",
-  "Consumer": "from-pink-400/40 via-rose-400/40 to-red-400/40",
+  "Technology": "bg-gradient-to-br from-blue-500/10 via-indigo-500/10 to-purple-500/10",
+  "Healthcare": "bg-gradient-to-br from-emerald-500/10 via-teal-500/10 to-cyan-500/10",
+  "Finance": "bg-gradient-to-br from-blue-500/10 via-sky-500/10 to-indigo-500/10",
+  "Energy": "bg-gradient-to-br from-amber-500/10 via-orange-500/10 to-yellow-500/10",
+  "Consumer": "bg-gradient-to-br from-pink-500/10 via-rose-500/10 to-red-500/10",
 };
 
 export default function CompanyCard({ company, onClick }: CompanyCardProps) {
   const SectorIcon = getSectorIcon(company.sector);
-  const gradientClass = sectorGradients[company.sector as keyof typeof sectorGradients] || "from-blue-400/40 via-indigo-400/40 to-purple-400/40";
+  const gradientClass = sectorGradients[company.sector as keyof typeof sectorGradients] || sectorGradients["Technology"];
 
   return (
     <motion.div
@@ -41,21 +41,17 @@ export default function CompanyCard({ company, onClick }: CompanyCardProps) {
     >
       <Card
         onClick={onClick}
-        className="relative p-6 cursor-pointer transition-all duration-300 bg-white hover:shadow-lg overflow-hidden border border-gray-100"
+        className={`relative p-6 cursor-pointer transition-all duration-300 bg-white hover:shadow-lg border border-gray-100 overflow-hidden ${gradientClass} hover:bg-opacity-100`}
       >
-        {/* Gradient overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-          <div className={`w-full h-full bg-gradient-to-r ${gradientClass}`} />
-        </div>
-
+        {/* Content wrapper */}
         <div className="relative z-10">
           <div className="flex items-start justify-between gap-4">
             <div className="flex items-center gap-4">
               <motion.div 
-                className="p-3 rounded-xl bg-gray-50 shadow-sm group-hover:shadow transition-all duration-300"
+                className="p-3 rounded-xl bg-white shadow-sm group-hover:shadow group-hover:bg-primary/5 transition-all duration-300"
                 whileHover={{ rotate: 10 }}
               >
-                <SectorIcon className="w-6 h-6 text-gray-700" />
+                <SectorIcon className="w-6 h-6 text-primary group-hover:text-primary/80" />
               </motion.div>
               <div>
                 <div className="flex items-center gap-2 mb-1">

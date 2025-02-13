@@ -46,7 +46,7 @@ export default function Home() {
 
       {/* Header */}
       <header className="border-b bg-white/90 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container max-w-7xl mx-auto px-8">
+        <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 py-4">
             <motion.div 
               className="p-2 rounded-xl bg-primary text-white"
@@ -60,7 +60,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="container max-w-7xl mx-auto px-8 py-12">
+      <main className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -82,7 +82,7 @@ export default function Home() {
 
         <FilterBar currentFilter={filter} onFilterChange={setFilter} />
 
-        <div className="space-y-6 mt-12">
+        <div className="mt-12 space-y-6">
           {isLoading ? (
             Array.from({ length: 3 }).map((_, i) => (
               <Skeleton key={i} className="h-40 w-full rounded-xl" />
