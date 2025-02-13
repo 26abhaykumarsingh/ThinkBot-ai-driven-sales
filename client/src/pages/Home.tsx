@@ -7,6 +7,7 @@ import FilterBar from "@/components/FilterBar";
 import { Company } from "@shared/schema";
 import { useInView } from "react-intersection-observer";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ChartBarIcon } from "lucide-react";
 
 export default function Home() {
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
@@ -38,31 +39,47 @@ export default function Home() {
   const companies = data?.pages.flat() ?? [];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white to-gray-100">
-      <div className="container mx-auto px-4 py-8">
-        <motion.h1 
+    <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-primary/5 relative overflow-hidden">
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+
+      {/* Header */}
+      <header className="border-b bg-white/50 backdrop-blur-sm sticky top-0 z-50">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-primary text-white">
+              <ChartBarIcon className="w-6 h-6" />
+            </div>
+            <span className="font-bold text-xl">MarketLens</span>
+          </div>
+        </div>
+      </header>
+
+      <div className="container mx-auto px-6 py-12">
+        <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-4xl font-bold text-center mb-2 bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent"
+          className="text-center max-w-3xl mx-auto mb-12"
         >
-          Market Intelligence
-        </motion.h1>
+          <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent">
+            Market Intelligence
+          </h1>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="text-center text-gray-600 mb-8"
-        >
-          Find the right companies, at the right time -- without the guesswork
-        </motion.p>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="text-lg text-gray-600"
+          >
+            Find the right companies, at the right time -- without the guesswork
+          </motion.p>
+        </motion.div>
 
         <FilterBar currentFilter={filter} onFilterChange={setFilter} />
 
-        <div className="space-y-4 mt-8">
+        <div className="space-y-6 mt-12">
           {isLoading ? (
             Array.from({ length: 3 }).map((_, i) => (
-              <Skeleton key={i} className="h-32 w-full rounded-lg" />
+              <Skeleton key={i} className="h-40 w-full rounded-xl" />
             ))
           ) : (
             companies.map((company: Company) => (
