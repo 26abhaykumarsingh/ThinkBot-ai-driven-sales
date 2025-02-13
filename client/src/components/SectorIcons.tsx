@@ -1,20 +1,20 @@
 import { IconType } from "react-icons";
 import { 
-  SiApple,
-  SiWebmd,
-  SiVisa,
+  SiFigma,
+  SiApollographql,
+  SiCoinbase,
   SiTesla,
-  SiAmazon
+  SiShopify
 } from "react-icons/si";
 
 const sectorToIcon: Record<string, IconType> = {
-  "Technology": SiApple,
-  "Healthcare": SiWebmd,
-  "Finance": SiVisa,
+  "Technology": SiFigma,
+  "Healthcare": SiApollographql,
+  "Finance": SiCoinbase,
   "Energy": SiTesla,
-  "Consumer": SiAmazon
+  "Consumer": SiShopify
 };
 
 export function getSectorIcon(sector: string): IconType {
-  return sectorToIcon[sector] || SiApple;
+  return sectorToIcon[sector] || SiFigma;
 }
