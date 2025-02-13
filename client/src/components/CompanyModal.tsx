@@ -9,11 +9,11 @@ interface CompanyModalProps {
 }
 
 const sectorGradients = {
-  "Technology": "from-blue-500/90 via-indigo-500/90 to-purple-500/90",
-  "Healthcare": "from-emerald-500/90 via-teal-500/90 to-cyan-500/90",
-  "Finance": "from-blue-500/90 via-sky-500/90 to-indigo-500/90",
-  "Energy": "from-amber-500/90 via-orange-500/90 to-yellow-500/90",
-  "Consumer": "from-pink-500/90 via-rose-500/90 to-red-500/90",
+  "Technology": "from-blue-600/90 to-blue-400/90",
+  "Healthcare": "from-blue-500/90 to-sky-400/90",
+  "Finance": "from-indigo-500/90 to-blue-400/90",
+  "Energy": "from-blue-700/90 to-blue-500/90",
+  "Consumer": "from-sky-500/90 to-blue-400/90",
 };
 
 export default function CompanyModal({ company, onClose }: CompanyModalProps) {
