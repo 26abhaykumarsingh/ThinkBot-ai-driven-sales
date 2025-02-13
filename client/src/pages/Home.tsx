@@ -39,26 +39,34 @@ export default function Home() {
   const companies = data?.pages.flat() ?? [];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-slate-50 to-primary/5">
+    <div className="min-h-screen relative">
+      {/* Animated gradient background */}
+      <div className="fixed inset-0 bg-gradient-to-br from-white via-blue-50 to-primary/10 animate-gradient-slow -z-10" />
+      <div className="fixed inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJub25lIiBzdHJva2U9InJnYmEoMCwwLDAsMC4wMykiIHN0cm9rZS13aWR0aD0iMiIvPjwvc3ZnPg==')] opacity-30 -z-10" />
+
       {/* Header */}
       <header className="border-b bg-white/90 backdrop-blur-sm sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-6 py-4">
+        <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-primary text-white">
+            <motion.div 
+              className="p-2 rounded-xl bg-primary text-white"
+              whileHover={{ scale: 1.05, rotate: 5 }}
+              whileTap={{ scale: 0.95 }}
+            >
               <ChartBarIcon className="w-6 h-6" />
-            </div>
+            </motion.div>
             <span className="font-bold text-xl">MarketLens</span>
           </div>
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-6 py-12">
+      <main className="max-w-7xl mx-auto px-6 py-12">
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center max-w-3xl mx-auto mb-12"
         >
-          <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent">
+          <h1 className="text-6xl font-bold mb-4 bg-gradient-to-r from-primary via-blue-500 to-primary bg-clip-text text-transparent">
             Market Intelligence
           </h1>
 
@@ -66,7 +74,7 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-lg text-gray-600"
+            className="text-xl text-gray-600"
           >
             Find the right companies, at the right time -- without the guesswork
           </motion.p>
